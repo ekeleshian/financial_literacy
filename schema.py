@@ -1,8 +1,10 @@
-column_dictionary = {"NFCSID":"RespondentID", "STATEQ":"State",	"CENSUSDIV":"CensusDivision",
+column_dictionary = {"NFCSID":"RespondentID", 
+	"STATEQ":"State",	
+	"CENSUSDIV":"CensusDivision",
 	"CENSUSREG":"CensusRegion",
 	"A3":"Gender",
 	"A3Ar_w":"AgeGroup",
-	"A3B":"Gender/AgeNet", #useless 
+	"A3B":"Gender/AgeNet", 
 	"A4A_new_w": "Ethnicity",
 	"A5_2015":"HighestLevelEducation",
 	"A6":"MaritalStatus",
@@ -56,7 +58,7 @@ column_dictionary = {"NFCSID":"RespondentID", "STATEQ":"State",	"CENSUSDIV":"Cen
 	"D20_7":"IncomeFromFamilyPastYear?",
 	"EA_1":"OwnHome?",
 	"E4A_2015":"YearBoughtHome",
-	"E5_2015":"%Downpayment",
+	"E5_2015":"Downpayment",
 	"E7":"CurrentlyMortgages?",
 	"E8":"EquityLoans?",
 	"E20":"MortgageDebtVsValue",
@@ -287,6 +289,9 @@ codes = {'State':
 	2: "Spending more than income",
 	3: "Spending about equal to income"
 }}
+
+wealth_metric = ['SavingsAccount?', "CheckingAccount?", "ConfidenceLevelToEarn2000WithinMonth", "EmregencyFunds?", "SpendingVsIncome",
+"OtherInvestments?", "OwnHome?", "CurrentlyMortgages?","TooMuchDebt?"]
 
 
 columns_to_drop = ["Gender/AgeNet","EndOfMilitaryService","RetireFromMilitary?","SpouseUSVeteran?"]
