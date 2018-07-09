@@ -1,3 +1,4 @@
+
 column_dictionary = {"NFCSID": "RespondentID",
                      "STATEQ": "State",
                      "CENSUSDIV": "CensusDivision",
@@ -122,7 +123,6 @@ column_dictionary = {"NFCSID": "RespondentID",
                      "wgt_d2": "DivisionalWeightByAgeGenderEthnicityEducationState",
                      "wgt_s3": "StateWeightByAgeGenderEthnicityEducation"
                      }
-
 codes = {'State':
              {1: "Alabama", 2: "Alaska",
               3: "Arizona",
@@ -284,11 +284,7 @@ codes = {'State':
              3: "You and someone else are equally knowledgeable",
              98: "Don't know"
          },
-         "SpendingVsIncome": {
-             1: "Spending less than income",
-             2: "Spending more than income",
-             3: "Spending about equal to income"
-         }}
+        }
 
 wealth_metric = ['SavingsAccount?', "CheckingAccount?", "ConfidenceLevelToEarn2000WithinMonth", "EmregencyFunds?",
                  "SpendingVsIncome",
