@@ -286,6 +286,44 @@ codes = {'State':
          },
         }
 
+
+dictionary_of_parameters = {
+        # money management parameters
+        "SatisfactionLevelCurrentFinances": {'target': [8, 9, 10], 'score': 1},
+        "WillingnessFinancialRisk": {'target': [8, 9, 10], 'score': 1},
+        "ConfidenceLevelToEarn2000WithinMonth": {'target': [1], 'score': 1},
+        "DegreeOfWorryAboutRetirement": {'target': [1], 'score': 1},
+        "GoodWithYourMoney?": {'target': [7], 'score': 1},
+        "FinancialKnowledge?": {'target': [7], 'score': 2},
+        "SpendingVsIncome": {'target': [1], 'score': 1},
+        "DifficultyLevelPayingBills": {'target': [3], 'score': 1},
+        "IncomeDropPastYear?": {'target': [1], 'score': 1},
+        "SavingsAccount?": {'target': [1], 'score': 1},
+        "PayCreditCardsInFullAlways?": {'target': [2], 'score': 1},
+        "CreditCardChargedInterest?": {'target': [1], 'score': -1},
+        'Budget?': {'target': [1], 'score': 1},
+        "CreditRating": {'target': [4,5], 'score': 1},
+        "HaveFinancialGoals?": {'target': [6,7], 'score': 1},
+        "CreditCardCashAdvance?": {'target': [1], 'score': -1},
+        "TooMuchDebt?": {'target': [6,7], 'score': -2},
+        "ParentsTeachYouAboutFinance?": {'target': [1], 'score': 1},
+        ###this is where the "planning for future" parameters start
+        "EmergencyFunds?": {'target': [1], 'score': 1},
+        "SavingsChildCollegeEducation?": {'target': [1], 'score': 1},
+        "RetirementFundCalculationsAtAll?": {'target': [1], 'score': 1},
+        "PensionPlanFromEmployer?": {'target': [1], 'score': 1},
+        "RetirementsAccountNotFromWork?": {'target': [1], 'score': 1},
+        "RegularlyContributeToRetirement?": {'target': [1], 'score': 1},
+        "HardshipWithdrawalFromRetirement?": {'target': [1], 'score': 1},
+        "OtherInvestments?": {'target': [1], 'score': 1},
+        #this is where teh financial literacy quiz starts
+        "FinancialTestQ1": {'target': [1], 'score': 1},
+        "FinancialTestQ2": {'target': [3], 'score': 1},
+        "FinancialTestQ3": {'target': [2], 'score': 1},
+        "FinancialTestQ4": {'target': [2], 'score': 1},
+        "FinancialTestQ5": {'target': [1], 'score': 1},
+        "FinancialTestQ6": {'target': [2], 'score': 1}
+    }
 wealth_metric = ['SavingsAccount?', "CheckingAccount?", "ConfidenceLevelToEarn2000WithinMonth", "EmregencyFunds?",
                  "SpendingVsIncome",
                  "OtherInvestments?", "OwnHome?", "CurrentlyMortgages?", "TooMuchDebt?"]

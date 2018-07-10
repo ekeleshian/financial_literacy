@@ -69,17 +69,15 @@ def score_analysis(df):
 
 def financial_score_calculation(df, dictionary_of_parameters):
     for parameter in dictionary_of_parameters:
-        target = dictionary_of_parameters[parameter][0]
-        score = dictionary_of_parameters[parameter][1]
-        for i in target:
+        for i in dictionary_of_parameters[parameter]['target']:
             index = df.loc[df[parameter] == i].index
             for i in index:
                 old_score = df.at[i, 'financialliteracyscore']
-                new_score = old_score + score
+                new_score = old_score + dictionary_of_parameters[parameter]['score']
                 df.at[i, 'financialliteracyscore'] = new_score
     for i in df.index:
         old_score = df.at[i, 'financialliteracyscore']
-        new_score = (old_score/21.0)*100
+        new_score = (old_score/27.0)*100
         df.at[i, 'financialliteracyscore'] = new_score
 
     return df
@@ -95,10 +93,11 @@ def main():
     score_analysis(df)
 
 
+
     # analysis_one = stdntloans_state(results)
     # analysis_two = age_budget(results)
     # analysis_three = age_savings(results)
-    # analysis_four = age_retirementfeelings(results)
+    analysis_four = age_retirementfeelings(results)
     # analysis_five = age_emergency(results)
 
 
