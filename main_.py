@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import numpy as np
+import time
 import schema
 
 
@@ -65,39 +66,44 @@ def score_analysis(df):
     print(education_groups['financialliteracyscore'].mean())
 
     df.hist(column = 'financialliteracyscore', by='HighestLevelEducation')
+    df.hist(column = 'financialliteracyscore', by="Ethnicity")
+    df.hist(column = 'financialliteracyscore', by='AgeGroup')
+    df.hist(column = 'financialliteracyscore', by='CensusRegion')
+
+
+    # mean = df['financialliteracyscore'].mean()
+    # plt.text(80, 80, '\mu = ', mean)
+
     plt.show()
 
 def financial_score_calculation(df, dictionary_of_parameters):
+
     for parameter in dictionary_of_parameters:
-        for i in dictionary_of_parameters[parameter]['target']:
-            index = df.loc[df[parameter] == i].index
-            for i in index:
-                old_score = df.at[i, 'financialliteracyscore']
-                new_score = old_score + dictionary_of_parameters[parameter]['score']
-                df.at[i, 'financialliteracyscore'] = new_score
-    for i in df.index:
-        old_score = df.at[i, 'financialliteracyscore']
-        new_score = (old_score/27.0)*100
-        df.at[i, 'financialliteracyscore'] = new_score
+        index = df[df[parameter].isin(dictionary_of_parameters[parameter]['target'])].index
+        df.loc[index, 'financialliteracyscore'] += dictionary_of_parameters[parameter]['score']
+    df['financialliteracyscore'] = df['financialliteracyscore'] / 27.0 * 100
+    print(df['financialliteracyscore'].head())
 
     return df
 
 
 def main():
-    csv_path = '/home/elizabeth/financial_literacy/2015_state_data.csv'
+    csv_path = '/home/elizabeth/2018SummerProjects/financial_literacy/2015_state_data.csv'
     df = pd.read_csv(csv_path, index_col='NFCSID')
     results = pipeline(df)
     results['financialliteracyscore'] = 0
-
+    time_0 = time.time()
     df = financial_score_calculation(df, schema.dictionary_of_parameters)
-    score_analysis(df)
+    # time_now = time.time() - time_0
+    # print(time_now)
+    # score_analysis(df)
 
 
 
     # analysis_one = stdntloans_state(results)
     # analysis_two = age_budget(results)
     # analysis_three = age_savings(results)
-    analysis_four = age_retirementfeelings(results)
+    # analysis_four = age_retirementfeelings(results)
     # analysis_five = age_emergency(results)
 
 
