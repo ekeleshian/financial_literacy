@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import schema
+from collections import Counter
 
 
 def new_columns(df):
@@ -61,19 +62,34 @@ def age_emergency(df):
     plt.show()
 
 def score_analysis(df):
-    education_groups = df.groupby('HighestLevelEducation')
+    # education_groups = df.groupby('HighestLevelEducation')
+    #
+    print(df['financialliteracyscore'].describe())
+    #
+    df.hist(column = 'financialliteracyscore')
+    # # df.hist(column = 'financialliteracyscore', by="Ethnicity")
+    # # df.hist(column = 'financialliteracyscore', by=df.loc[df['AgeGroup'].isin(['18-24'])])
+    # # df.hist(column = 'financialliteracyscore', by='CensusRegion')
+    # df.hist(column='financialliteracyscore', by='AgeGroup')
+    # er_funds = df.loc[df["EmergencyFunds?"].isin([1,2])]
+    # er_funds.hist(column = 'EmergencyFunds?')
+    # print(er_funds['financialliteracyscore'].describe())
+    # fin_know = df.loc[df['FinancialKnowledge?'].isin([1,2,3,4,5,6,7])]
+    # fin_know.hist(column = 'FinancialKnowledge?')
+    # print(fin_know['FinancialKnowledge?'].describe())
 
-    print(education_groups['financialliteracyscore'].mean())
 
-    df.hist(column = 'financialliteracyscore', by='HighestLevelEducation')
-    df.hist(column = 'financialliteracyscore', by="Ethnicity")
-    df.hist(column = 'financialliteracyscore', by='AgeGroup')
-    df.hist(column = 'financialliteracyscore', by='CensusRegion')
-
+    # younger_adults = df.loc[df['AgeGroup'].isin(['18-24','25-34'])]
+    # older_adults = df.loc[df['AgeGroup'].isin(['35-44', '45-54', '55-64', "65+"])]
+    # younger_adults.hist(column = 'financialliteracyscore')
+    # older_adults.hist(column = 'financialliteracyscore')
+    # print(younger_adults['financialliteracyscore'].describe())
+    #
+    # print(older_adults['financialliteracyscore'].describe())
 
     # mean = df['financialliteracyscore'].mean()
     # plt.text(80, 80, '\mu = ', mean)
-
+    #
     plt.show()
 
 def financial_score_calculation(df, dictionary_of_parameters):
@@ -81,9 +97,8 @@ def financial_score_calculation(df, dictionary_of_parameters):
     for parameter in dictionary_of_parameters:
         index = df[df[parameter].isin(dictionary_of_parameters[parameter]['target'])].index
         df.loc[index, 'financialliteracyscore'] += dictionary_of_parameters[parameter]['score']
-    df['financialliteracyscore'] = df['financialliteracyscore'] / 27.0 * 100
-    print(df['financialliteracyscore'].head())
 
+    df['financialliteracyscore'] = (df['financialliteracyscore']+2)/27.0 *100
     return df
 
 
@@ -92,11 +107,12 @@ def main():
     df = pd.read_csv(csv_path, index_col='NFCSID')
     results = pipeline(df)
     results['financialliteracyscore'] = 0
-    time_0 = time.time()
+    # time_0 = time.time()
     df = financial_score_calculation(df, schema.dictionary_of_parameters)
+    df.to_csv('correct_processed_data.csv')
     # time_now = time.time() - time_0
     # print(time_now)
-    # score_analysis(df)
+    score_analysis(df)
 
 
 
