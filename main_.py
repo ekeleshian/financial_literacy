@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import schema
-from collections import Counter
+import csv
+from pdb import set_trace
 
 
 def new_columns(df):
@@ -22,17 +23,22 @@ def ignore_columns(df):
     for c in schema.columns_to_drop:
         df.drop(c, axis=1)
 
+def idk_metric(df):
+    for k in schema.idk_columns:
+        dictionary = {k: dict(schema.idk_score)}
+        df.replace(to_replace = dictionary, inplace=True)
+    return df
 
 def pipeline(dataframe):
     modified_columns_df = new_columns(dataframe)
     drop_columns = ignore_columns(modified_columns_df)
     master_df = convert_row_values(modified_columns_df)
-    return master_df
+    master_master_df = idk_metric(master_df)
+    return master_master_df
 
 
 def stdntloans_state(df):
     test1 = df.groupby(['State', "StudentLoans?1=Y"])['State'].count().unstack('StudentLoans?1=Y').fillna(0)
-
     test1.plot(kind='bar', stacked=True)
     plt.show()
 
@@ -97,25 +103,31 @@ def financial_score_calculation(df, dictionary_of_parameters):
     for parameter in dictionary_of_parameters:
         index = df[df[parameter].isin(dictionary_of_parameters[parameter]['target'])].index
         df.loc[index, 'financialliteracyscore'] += dictionary_of_parameters[parameter]['score']
+    df['financialliteracyscore'] = df['financialliteracyscore'] / 27.0* 100
+    print(df['financialliteracyscore'].head())
 
     df['financialliteracyscore'] = (df['financialliteracyscore']+2)/27.0 *100
     return df
 
 
 def main():
-    csv_path = '/home/elizabeth/2018SummerProjects/financial_literacy/2015_state_data.csv'
+    csv_path = './2015_state_data.csv'
     df = pd.read_csv(csv_path, index_col='NFCSID')
     results = pipeline(df)
+
     results['financialliteracyscore'] = 0
-    # time_0 = time.time()
-    df = financial_score_calculation(df, schema.dictionary_of_parameters)
-    df.to_csv('correct_processed_data.csv')
+    df = financial_score_calculation(results, schema.dictionary_of_parameters)
     # time_now = time.time() - time_0
     # print(time_now)
     score_analysis(df)
 
 
-
+    df.to_csv('correct_data.csv')
+    # with open('correct_data.csv', "w") as csv_file:
+    #     writer = csv.writer(csv_file, delimiter = ',')
+    #     for line in df:
+    #     #     set_trace()
+    #         writer.writerow([line])
     # analysis_one = stdntloans_state(results)
     # analysis_two = age_budget(results)
     # analysis_three = age_savings(results)
