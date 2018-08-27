@@ -104,9 +104,7 @@ def financial_score_calculation(df, dictionary_of_parameters):
         index = df[df[parameter].isin(dictionary_of_parameters[parameter]['target'])].index
         df.loc[index, 'financialliteracyscore'] += dictionary_of_parameters[parameter]['score']
     df['financialliteracyscore'] = df['financialliteracyscore'] / 27.0* 100
-    print(df['financialliteracyscore'].head())
 
-    df['financialliteracyscore'] = (df['financialliteracyscore']+2)/27.0 *100
     return df
 
 
